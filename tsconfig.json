@@ -3,9 +3,11 @@
         "module": "commonjs",
         "target": "es6",
         "noImplicitAny": false,
-        "sourceMap": false
+        "sourceMap": false,
+        "allowUnreachableCode": true,
+        "noEmitOnError": true
     },
     "exclude": [
-        "node_modules", "typings/browser", "typings/browser.d.ts"
+        "node_modules", "typings/browser", "typings/browser.d.ts","test"
     ]
 }

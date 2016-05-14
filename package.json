@@ -4,12 +4,18 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "test:unit": "mocha --compilers ts:espower-typescript/guess",
+    "clean": "rm -r -f ./**/*.js"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "eslint-config-airbnb": "^9.0.1",
-    "eslint-plugin-react": "^5.1.1"
+    "eslint-plugin-react": "^5.1.1",
+    "espower-typescript": "^5.0.1",
+    "mocha": "^2.4.5",
+    "power-assert": "^1.4.1",
+    "typescript": "^1.8.10"
   }
 }
