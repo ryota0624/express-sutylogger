@@ -1,2 +1,10 @@
 import logger from './logger';
-module.exports = logger;
+import parent from './cluster/parent';
+import child from './cluster/child';
+module.exports = {
+  logger,
+  cluster: {
+    parent,
+    child
+  }
+}
