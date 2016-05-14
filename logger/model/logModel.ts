@@ -6,7 +6,7 @@ class Log {
     this.arch = process.arch;
   }
   static getHeader() {
-    return 'tiime,arch\n';
+    return 'time,arch\n';
   }
   toCSV() {
     return `${this.time},${this.arch}\n`
