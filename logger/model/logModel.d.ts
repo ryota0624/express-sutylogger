@@ -3,6 +3,8 @@ declare class Log {
     arch: string;
     process: NodeJS.MemoryUsage;
     pid: number;
+    loadavg: any;
+    os: any;
     constructor();
     static getHeader(): string;
     toCSV(): string;
