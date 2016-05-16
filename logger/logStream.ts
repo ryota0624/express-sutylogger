@@ -3,10 +3,8 @@ import * as fs from 'fs';
 import LogModel from './model/logModel';
 class TestStream extends stream.Duplex {
   _read(size) {
-    
   }
   _write(chunk, encoding, cb) {
-    console.log(chunk.toString());
     this.push(chunk);
     cb();
   }
@@ -31,6 +29,3 @@ const logStream = (filename: string) => {
 }
 
 export default logStream;
-
-// const testSt = logStream(__dirname + '/hoge.txt');
-// Array.from({ length: 10 }, (i, key) => ({ key, name: `${key}man` })).forEach(i => testSt.write("boge"));
