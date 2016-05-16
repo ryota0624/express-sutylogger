@@ -18,7 +18,6 @@ export default (outfileName: string) => {
     logStream = stream(outfileName)
   }
   return function middleware (req: express.Request, res: express.Response, next: express.NextFunction) {
-    console.log(req.url)
     switch(req.url) {
       case '/sutylog': {
         const log = fs.createReadStream(outfileName);
