@@ -1,11 +1,12 @@
 import * as express from 'express';
 import stream from './logger/logStream';
 import * as fs from 'fs';
+
 export default (outfileName: string) => {
   let logStream;
-  const logger = (req: express.Request, res: express.Response, next: express.NextFunction) => {
-    logStream.write(req.url);
-    next();
+  let loggerActive = false;
+  const logger = (url) => {
+    logStream.write(url);
   }
   function stoplogger() {
     const time = new Date();
@@ -16,9 +17,30 @@ export default (outfileName: string) => {
   function startlogger() {
     logStream = stream(outfileName)
   }
-  return {
-    logger,
-    stoplogger,
-    startlogger
+  return function middleware (req: express.Request, res: express.Response, next: express.NextFunction) {
+    console.log(req.url)
+    switch(req.url) {
+      case '/sutylog': {
+        const log = fs.createReadStream(outfileName);
+        log.pipe(res);
+        return
+      }
+      case '/sutystart': {
+        loggerActive = true;
+        startlogger();
+        res.send(true)
+        return
+      }
+      case '/sutystop': {
+        loggerActive = false;
+        stoplogger();
+        res.send(true)
+        return
+      }
+    }
+    if(loggerActive) {
+      logger(req.url);
+    }
+    next();
   }
 }
