@@ -18,10 +18,10 @@ class Log {
     this.pid = process.pid;
   }
   static getHeader() {
-    return 'processMemoryCur,processMemoryMax,pcMemoryCur,pcMemoryMax,loadAverage1,loadAverage5,loadAverage15\n';
+    return 'time,processMemoryCur,processMemoryMax,pcMemoryCur,pcMemoryMax,loadAverage1,loadAverage5,loadAverage15\n';
   }
   toCSV() {
-    return `${this.process.heapUsed},${this.process.heapTotal},${this.os.freemem},${this.os.totalmem},${this.loadavg[0]},${this.loadavg[1]},${this.loadavg[2]}\n`
+    return `${this.time},${this.process.heapUsed},${this.process.heapTotal},${this.os.freemem},${this.os.totalmem},${this.loadavg[0]},${this.loadavg[1]},${this.loadavg[2]}\n`
   }
 }
 

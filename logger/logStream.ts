@@ -10,7 +10,7 @@ class TestStream extends stream.Duplex {
   }
 }
 
-class LogStream extends stream.Transform {
+export class LogStream extends stream.Transform {
   _transform(chunk, encoding, cb) {
     const log = new LogModel();
     this.push(log.toCSV());

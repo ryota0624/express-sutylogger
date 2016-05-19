@@ -3,20 +3,30 @@ import * as fs from 'fs';
 
 import { messageType } from './common'
 import Log from '../logger/model/logModel';
-export default (outfileName) => (req: express.Request, res: express.Response, next: express.NextFunction) => {
+export default () => (req: express.Request, res: express.Response, next: express.NextFunction) => {
+  const outDirname = process.env.PWD + '/sutyLog';
+  const outfileName = outDirname + '/log.csv';
   const log = new Log();
+    function initDir() {
+    try {
+      fs.mkdirSync(outDirname);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+  initDir();
   switch(req.url) {
-    case '/sutylog': {
+    case '/suty/log': {
       const log = fs.createReadStream(outfileName);
       log.pipe(res);
       return
     }
-    case '/sutystart': {
+    case '/suty/start': {
       process.send({ type: messageType.on, log: log.toCSV() });
       res.send(true)
       return
     }
-    case '/sutystop': {
+    case '/suty/stop': {
       process.send({ type: messageType.off, log: log.toCSV() });
       res.send(true)
       return
