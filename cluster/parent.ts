@@ -12,7 +12,6 @@ const parentLogger = (filename: string) =>  (workers: Array<cluster.Worker>) => 
       switch (data.type) {
         case messageType.log: {
           if (loggerActive) {
-            console.log("lgo")
             logStream.write(data.log);
           }
           break;
