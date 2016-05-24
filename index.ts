@@ -1,10 +1,6 @@
 import logger from './logger';
-import parent from './cluster/parent';
-import child from './cluster/child';
+import { clusterLogger } from './cluster/common';
 module.exports = {
   logger,
-  cluster: {
-    parent,
-    child
-  }
+  cluster: clusterLogger
 }
