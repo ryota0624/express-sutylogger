@@ -18,7 +18,7 @@ const route = (option) => {
         return;
       }
     }
-    other();
+    other(req, res, next);
     next();
   }
 };
