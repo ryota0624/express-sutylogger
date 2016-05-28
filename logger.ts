@@ -27,11 +27,13 @@ const log = (filename) => (req, res, next) => {
 const start = (filename) => (req, res, next) => {
   loggerActive = true;
   startlogger(filename);
+  res.send({ logger: "start" });
 }
 
 const stop = (filename) => (req, res, next) => {
   loggerActive = false;
   stoplogger(filename);
+  res.send({ logger: "stop" })
 }
 
 const other = (req, res, next) => {

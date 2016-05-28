@@ -9,16 +9,16 @@ const log = (filename) => (req, res, next) => {
   logStream.pipe(res);
 }
 
-const stop = (req, res, next) => {
-  const log = new Log();
-  process.send({ type: messageType.off, log: log.toCSV() });
-  res.send(true);
-}
-
 const start = (req, res, next) => {
   const log = new Log();
   process.send({ type: messageType.on, log: log.toCSV() });
-  res.send(true);
+  res.send({ logger: "start" });
+}
+
+const stop = (req, res, next) => {
+  const log = new Log();
+  process.send({ type: messageType.off, log: log.toCSV() });
+  res.send({ logger: "stop" })
 }
 
 const other = (req, res, next) => {
