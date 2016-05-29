@@ -5,7 +5,7 @@
 npm i  
 
 const app = require('express')();
-const logger = require('suty-logger').logger();
+const logger = require('suty-logger').logger(__dirname + '/log.csv');
 app.use(logger);  
 
 /*
