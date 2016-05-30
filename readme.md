@@ -1,9 +1,13 @@
 # express-sutilery-middleware
 
+## install
+```
+npm install  
+
+```
+
 ## Usage
 ```
-npm i  
-
 const app = require('express')();
 const logger = require('suty-logger').logger(__dirname + '/log.csv');
 app.use(logger);  
