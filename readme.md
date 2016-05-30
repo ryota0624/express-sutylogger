@@ -19,7 +19,7 @@ app.use(logger);
 ##cluster
 ```
 const express = require('express');
-const sutyLogger = require('../logMiddleware').cluster;  
+const sutyLogger = require('suty-logger').cluster;  
 const numCPUs = require('os').cpus().length;  
 const cluster = require('cluster');  
 const fs = require('fs');  
