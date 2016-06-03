@@ -6,8 +6,8 @@ class Log {
   pid: number;
   loadavg;
   os;
-  constructor() {
-    this.time = new Date().getTime();
+  constructor(params) {
+    this.time = new Date().getTime() - params.startTime;
     this.arch = process.arch;
     this.process = process.memoryUsage();
     this.loadavg = os.loadavg();

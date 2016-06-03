@@ -1,13 +1,14 @@
 import * as express from 'express';
-import stream from './logger/logStream';
 import * as fs from 'fs';
 import router from './common/router';
+import LogModel from './logger/model/logModel';
 
 let logStream;
 let loggerActive = false;
-
+let startTime;
 function startlogger(filename) {
-  logStream = stream(filename);
+  startTime = new Date().getTime();
+  logStream = fs.createWriteStream(filename);
 }
 function stoplogger(filename) {
   const time = new Date();
@@ -16,7 +17,8 @@ function stoplogger(filename) {
   logReadStream.pipe(logWriteStream);
 }
 function logger(url) {
-  logStream.write(url);
+  const log = new LogModel({ startTime });
+  logStream.write(log.toCSV());
 }
 
 const log = (filename) => (req, res, next) => {
