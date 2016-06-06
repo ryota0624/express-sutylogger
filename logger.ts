@@ -9,6 +9,7 @@ let startTime;
 function startlogger(filename) {
   startTime = new Date().getTime();
   logStream = fs.createWriteStream(filename);
+  logStream.write(LogModel.getHeader());
 }
 function stoplogger(filename) {
   const time = new Date();
