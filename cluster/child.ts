@@ -3,14 +3,12 @@ import * as fs from 'fs';
 import route from '../common/router';
 import { messageType } from './common'
 import Log from '../logger/model/logModel';
-let startTime = null;
 const log = (filename) => (req, res, next) => {
   const logStream = fs.createReadStream(filename);
   logStream.pipe(res);
 }
 
 const start = (req, res, next) => {
-  startTime = new Date().getTime();
   process.send({ type: messageType.on });
   res.send({ logger: "start" });
 }
@@ -21,8 +19,7 @@ const stop = (req, res, next) => {
 }
 
 const other = (req, res, next) => {
-  const log = new Log({ startTime });
-  process.send({ type: messageType.log, log: log.toCSV() });
+  process.send({ type: messageType.log, pid: process.pid });
 }
 
 export default (fiilename) => route({
