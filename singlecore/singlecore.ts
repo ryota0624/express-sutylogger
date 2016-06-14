@@ -1,25 +1,28 @@
 import * as express from 'express';
 import * as fs from 'fs';
-import router from './common/router';
-import LogModel from './logger/model/logModel';
+import router from '../common/router';
+import { logHeader, logging } from '../common/logger';
 
 let logStream;
 let loggerActive = false;
 let startTime;
-function startlogger(filename) {
+let filename = '';
+function startlogger(setFilename) {
+  filename = setFilename;
   startTime = new Date().getTime();
-  logStream = fs.createWriteStream(filename);
-  logStream.write(LogModel.getHeader());
+  fs.writeFile(filename, logHeader());
 }
 function stoplogger(filename) {
   const time = new Date();
   const logReadStream = fs.createReadStream(filename);
-  const logWriteStream = fs.createWriteStream(filename + time.getTime() + ".old");
+  const logWriteStream = fs.createWriteStream(filename + time.getTime() + ".csv");
   logReadStream.pipe(logWriteStream);
 }
 function logger(url) {
-  const log = new LogModel({ startTime });
-  logStream.write(log.toCSV());
+  const time = (new Date).getTime() - startTime; 
+  logging({ time }).then(log => {
+    fs.appendFile(filename, log);
+  })
 }
 
 const log = (filename) => (req, res, next) => {

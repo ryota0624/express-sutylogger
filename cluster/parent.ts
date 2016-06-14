@@ -1,10 +1,12 @@
 import * as fs from 'fs';
 import * as cluster from 'cluster';
 import { messageType } from './common';
-import Log from '../logger/model/logModel';
-const parentLogger = (filename: string) =>  (workers: Array<cluster.Worker>) => {
+import { logHeader } from '../common/logger';
+let startTime;
+
+const parentLogger = (filename: string) => (workers: Array<cluster.Worker>) => {
   let logStream = fs.createWriteStream(filename);
-  logStream.write(Log.getHeader());
+  logStream.write(logHeader());
   const cluster = require('cluster');
   let loggerActive = false;
   for (var id in workers) {
@@ -12,14 +14,17 @@ const parentLogger = (filename: string) =>  (workers: Array<cluster.Worker>) => 
       switch (data.type) {
         case messageType.log: {
           if (loggerActive) {
+            const time = new Date().getTime() - startTime;
+            const log = data.log.replace('notFilled', time);
             logStream.write(data.log);
           }
           break;
         }
         case messageType.on: {
+          startTime = new Date().getTime();
           loggerActive = true;
           logStream = fs.createWriteStream(filename);
-          logStream.write(Log.getHeader());
+          logStream.write(logHeader());
           break;
         }
         case messageType.off: {
