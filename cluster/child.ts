@@ -2,7 +2,8 @@ import * as express from 'express';
 import * as fs from 'fs';
 import route from '../common/router';
 import { messageType } from './common'
-import Log from '../logger/model/logModel';
+import { logging } from '../common/logger'
+let startTime = null;
 
 const log = (filename) => (req, res, next) => {
   const logStream = fs.createReadStream(filename);
@@ -10,20 +11,18 @@ const log = (filename) => (req, res, next) => {
 }
 
 const start = (req, res, next) => {
-  const log = new Log();
-  process.send({ type: messageType.on, log: log.toCSV() });
+  startTime = new Date().getTime();
+  process.send({ type: messageType.on });
   res.send({ logger: "start" });
 }
 
 const stop = (req, res, next) => {
-  const log = new Log();
-  process.send({ type: messageType.off, log: log.toCSV() });
+  process.send({ type: messageType.off });
   res.send({ logger: "stop" })
 }
 
 const other = (req, res, next) => {
-  const log = new Log();
-  process.send({ type: messageType.log, log: log.toCSV() });
+  process.send({ type: messageType.log, log: logging({ time: 'notFilled' }) });  
 }
 
 export default (fiilename) => route({
