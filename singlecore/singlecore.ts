@@ -20,9 +20,7 @@ function stoplogger(filename) {
 }
 function logger(url) {
   const time = (new Date).getTime() - startTime; 
-  logging({ time }).then(log => {
-    fs.appendFile(filename, log);
-  })
+  fs.appendFile(filename, logging({ time }));
 }
 
 const log = (filename) => (req, res, next) => {

@@ -22,7 +22,7 @@ const stop = (req, res, next) => {
 }
 
 const other = (req, res, next) => {
-  logging({ time: 'notFilled' }).then(log => process.send({ type: messageType.log, log }));  
+  process.send({ type: messageType.log, log: logging({ time: 'notFilled' }) });  
 }
 
 export default (fiilename) => route({
